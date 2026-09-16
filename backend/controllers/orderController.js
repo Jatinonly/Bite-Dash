@@ -3,6 +3,7 @@ import userModel from "../models/userModel.js";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const PROMO_CODES = { BITE10: 0.1 };
 
 //placing user order for frontend
 const placeOrder = async (req, res) => {
@@ -12,11 +13,20 @@ const placeOrder = async (req, res) => {
     const newOrder = new orderModel({
       userId: req.body.userId,
       items: req.body.items,
-      amount: req.body.amount,
+      amount: 0,
       address: req.body.address,
     });
-    await newOrder.save(); //saving this in database order
-    await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} }); //emptying the cart data of the user
+
+    const subtotal = req.body.items.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0,
+    );
+    const discountRate = PROMO_CODES[req.body.promoCode] || 0;
+    const discount = Math.round(subtotal * discountRate);
+    const totalAmount = subtotal - discount + 49;
+    newOrder.amount = totalAmount;
+    await newOrder.save();
+    await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
 
     const line_items = req.body.items.map((item) => ({
       price_data: {
@@ -24,7 +34,10 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: item.name,
         },
-        unit_amount: item.price * 100, //ruppee to paise
+        unit_amount: Math.max(
+          0,
+          Math.round(item.price * 100 * (1 - discountRate)),
+        ),
       },
       quantity: item.quantity,
     }));
@@ -106,5 +119,3 @@ const updateStatus = async (req, res) => {
 };
 
 export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus };
-
-

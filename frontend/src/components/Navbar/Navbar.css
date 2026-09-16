@@ -6,7 +6,15 @@
 }
 
 .navbar .logo {
-  width: 150px;
+  display: block;
+  color: tomato;
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.navbar > a {
+  flex-shrink: 0;
 }
 
 .navbar-menu {
@@ -15,12 +23,46 @@
   gap: 20px;
   color: #49557e;
   font-size: 18px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .navbar-right {
   display: flex;
   align-items: center;
   gap: 40px;
+}
+
+.navbar-search {
+  width: min(280px, 30vw);
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid rgba(73, 85, 126, 0.3);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.navbar-search svg {
+  flex: 0 0 auto;
+}
+
+.navbar-search input {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #49557e;
+  font: inherit;
+  font-size: 14px;
+}
+
+.navbar-search input::placeholder {
+  color: #6b7280;
 }
 
 .navbar button {
@@ -51,6 +93,14 @@
   position: relative;
 }
 
+.navbar-search-icon img {
+  width: 30px;
+  height: 30px;
+  display: block;
+  object-fit: contain;
+  cursor: pointer;
+}
+
 .navbar-search-icon .dot {
   position: absolute;
   min-width: 10px;
@@ -63,7 +113,7 @@
 
 @media (max-width: 1050px) {
   .navbar .logo {
-    width: 140px;
+    font-size: 34px;
   }
   .navbar-menu {
     gap: 20px;
@@ -71,6 +121,9 @@
   }
   .navbar-right {
     gap: 30px;
+  }
+  .navbar-search {
+    width: min(230px, 28vw);
   }
   .navbar-right img {
     width: 22px;
@@ -82,7 +135,7 @@
 
 @media (max-width: 900px) {
   .navbar .logo {
-    width: 120px;
+    font-size: 30px;
   }
   .navbar-menu {
     gap: 15px;
@@ -90,6 +143,9 @@
   }
   .navbar-right {
     gap: 20px;
+  }
+  .navbar-search {
+    width: 190px;
   }
   .navbar-right img {
     width: 20px;
@@ -101,6 +157,13 @@
 
 .navbar-profile {
   position: relative;
+}
+
+.navbar-profile > img {
+  width: 32px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
 }
 
 .nav-profile-dropdown {
@@ -138,6 +201,10 @@
 }
 
 @media (max-width: 750px) {
+  .navbar-search {
+    width: 150px;
+    height: 40px;
+  }
   .navbar-menu {
     display: none;
   }

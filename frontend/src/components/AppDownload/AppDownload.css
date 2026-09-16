@@ -6,6 +6,14 @@
   font-weight: 500;
 }
 
+.app-download-logo {
+  display: inline-block;
+  font-size: 1.15em;
+  font-weight: 700;
+  color: tomato;
+  line-height: 1;
+}
+
 .app-download-platforms {
   display: flex;
   justify-content: center;

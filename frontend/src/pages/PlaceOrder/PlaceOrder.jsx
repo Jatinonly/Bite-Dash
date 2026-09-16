@@ -5,8 +5,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
-  const { getTotalCartAmount, token, food_list, cartItems, url } =
-    useContext(StoreContext);
+  const {
+    getTotalCartAmount,
+    getDiscountAmount,
+    promoCode,
+    token,
+    food_list,
+    cartItems,
+    url,
+  } = useContext(StoreContext);
 
   const [data, setData] = useState({
     firstName: "",
@@ -34,7 +41,7 @@ const PlaceOrder = () => {
     let orderItems = [];
     food_list.map((item) => {
       if (cartItems[item._id] > 0) {
-        let itemInfo = item;
+        let itemInfo = { ...item };
         itemInfo["quantity"] = cartItems[item._id];
         orderItems.push(itemInfo);
       }
@@ -42,7 +49,8 @@ const PlaceOrder = () => {
     let orderData = {
       address: data,
       items: orderItems,
-      amount: getTotalCartAmount() + 49, //+49 for delivery fee
+      amount: getTotalCartAmount() - getDiscountAmount() + 49,
+      promoCode,
     };
     let response = await axios.post(url + "/api/order/place", orderData, {
       headers: { token },

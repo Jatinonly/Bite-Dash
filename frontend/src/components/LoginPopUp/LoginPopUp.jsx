@@ -47,7 +47,7 @@ const LoginPopUp = ({ setShowLogin }) => {
           <h2>{currState}</h2>
           <img
             onClick={() => setShowLogin(false)}
-            src={assets.cross_icon}
+            src={assets.close_icon}
             alt=""
           />
         </div>
@@ -85,8 +85,10 @@ const LoginPopUp = ({ setShowLogin }) => {
           {currState === "Sign Up" ? "Create Account" : "Login"}
         </button>
         <div className="login-popup-condition">
-          <input type="checkbox" required />
-          <p>By continuing, i agree to the terms of use & privacy policy.</p>
+          <input id="terms-agreement" type="checkbox" required />
+          <label htmlFor="terms-agreement">
+            By continuing, I agree to the terms of use & privacy policy.
+          </label>
         </div>
         {currState === "Login" ? (
           <p>

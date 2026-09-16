@@ -1,16 +1,18 @@
 .login-popup {
-  position: absolute;
-  z-index: 1;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
   width: 100%;
   height: 100%;
   background-color: #00000090;
   display: grid;
+  place-items: center;
+  padding: 20px;
 }
 
 .login-popup-container {
-  place-self: center;
   color: #808080;
-  width: max(23vw, 330p);
+  width: min(100%, 430px);
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -58,13 +60,24 @@
 
 .login-popup-condition {
   display: flex;
-  align-items: start;
+  align-items: center;
   gap: 8px;
   margin-top: -15px;
+  cursor: pointer;
+}
+
+.login-popup-condition label {
+  cursor: pointer;
 }
 
 .login-popup-condition input {
-  margin-top: 5px;
+  margin: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.login-popup-condition input:hover {
+  transform: scale(1.1);
 }
 
 .login-popup p span {
@@ -72,4 +85,3 @@
   font-weight: 500;
   cursor: pointer;
 }
-

@@ -5,9 +5,24 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = "https://food-delivery-website-54qu.onrender.com";
+  const url = "http://localhost:4000";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [isFoodLoading, setIsFoodLoading] = useState(true);
+  const [promoCode, setPromoCode] = useState("");
+
+  const applyPromoCode = (code) => {
+    const normalizedCode = code.trim().toUpperCase();
+    if (normalizedCode === "BITE10") {
+      setPromoCode(normalizedCode);
+      return true;
+    }
+    setPromoCode("");
+    return false;
+  };
+
+  const getDiscountAmount = () =>
+    promoCode === "BITE10" ? Math.round(getTotalCartAmount() * 0.1) : 0;
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -19,7 +34,7 @@ const StoreContextProvider = (props) => {
       await axios.post(
         url + "/api/cart/add",
         { itemId },
-        { headers: { token } }
+        { headers: { token } },
       );
     }
   };
@@ -30,7 +45,7 @@ const StoreContextProvider = (props) => {
       await axios.post(
         url + "/api/cart/remove",
         { itemId },
-        { headers: { token } }
+        { headers: { token } },
       );
     }
   };
@@ -47,15 +62,19 @@ const StoreContextProvider = (props) => {
   };
 
   const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/food/list");
-    setFoodList(response.data.data);
+    try {
+      const response = await axios.get(url + "/api/food/list");
+      setFoodList(response.data.data);
+    } finally {
+      setIsFoodLoading(false);
+    }
   };
 
   const loadCartData = async (token) => {
     const response = await axios.post(
       url + "/api/cart/get",
       {},
-      { headers: { token } }
+      { headers: { token } },
     );
     setCartItems(response.data.cartData);
   };
@@ -73,11 +92,15 @@ const StoreContextProvider = (props) => {
 
   const contextValue = {
     food_list,
+    isFoodLoading,
     cartItems,
     setCartItems,
     addToCart,
     removeFromCart,
     getTotalCartAmount,
+    promoCode,
+    applyPromoCode,
+    getDiscountAmount,
     url,
     token,
     setToken,
@@ -91,4 +114,3 @@ const StoreContextProvider = (props) => {
 };
 
 export default StoreContextProvider;
-
