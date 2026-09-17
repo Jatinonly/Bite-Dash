@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import "./Cart.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Cart = () => {
+const Cart = ({ setShowLogin }) => {
   const {
     cartItems,
     food_list,
@@ -13,6 +14,8 @@ const Cart = () => {
     applyPromoCode,
     promoCode,
     url,
+    isFoodLoading,
+    token,
   } = useContext(StoreContext);
 
   const [promoInput, setPromoInput] = React.useState("");
@@ -24,11 +27,26 @@ const Cart = () => {
   const discount = getDiscountAmount();
   const originalTotal = subtotal === 0 ? 0 : subtotal + 49;
   const finalTotal = subtotal === 0 ? 0 : subtotal - discount + 49;
+  const hasItems = Object.values(cartItems).some((quantity) => quantity > 0);
 
   const handlePromoCode = () => {
     const applied = applyPromoCode(promoInput);
     setPromoMessage(applied ? "Promo code applied" : "Invalid promo code");
     setPromoStatus(applied ? "success" : "error");
+    if (applied) {
+      toast.success("Promo code applied successfully");
+    } else {
+      toast.error("Invalid promo code");
+    }
+  };
+
+  const handleCheckout = () => {
+    if (!token) {
+      setShowLogin(true);
+      return;
+    }
+
+    navigate("/order");
   };
 
   return (
@@ -44,25 +62,39 @@ const Cart = () => {
         </div>
         <br />
         <hr />
-        {food_list.map((item) => {
-          if (cartItems[item._id] > 0) {
-            return (
-              <div>
-                <div className="cart-items-title cart-items-item">
-                  <img src={url + "/images/" + item.image} alt="" />
-                  <p>{item.name}</p>
-                  <p>₹{item.price}</p>
-                  <p>{cartItems[item._id]}</p>
-                  <p>₹{item.price * cartItems[item._id]}</p>
-                  <p onClick={() => removeFromCart(item._id)} className="cross">
-                    x
-                  </p>
+        {!isFoodLoading && !hasItems ? (
+          <div className="cart-empty-state">
+            <h2>Your cart is empty</h2>
+            <p>Add something delicious and it will show up here.</p>
+            <button type="button" onClick={() => navigate("/")}>
+              ADD ITEMS
+            </button>
+          </div>
+        ) : (
+          food_list.map((item) => {
+            if (cartItems[item._id] > 0) {
+              return (
+                <div key={item._id}>
+                  <div className="cart-items-title cart-items-item">
+                    <img src={url + "/images/" + item.image} alt={item.name} />
+                    <p>{item.name}</p>
+                    <p>₹{item.price}</p>
+                    <p>{cartItems[item._id]}</p>
+                    <p>₹{item.price * cartItems[item._id]}</p>
+                    <p
+                      onClick={() => removeFromCart(item._id)}
+                      className="cross"
+                    >
+                      x
+                    </p>
+                  </div>
+                  <hr />
                 </div>
-                <hr />
-              </div>
-            );
-          }
-        })}
+              );
+            }
+            return null;
+          })
+        )}
       </div>
       <div className="cart-bottom">
         <div className="cart-total">
@@ -93,7 +125,7 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          <button onClick={() => navigate("/order")}>
+          <button disabled={!hasItems} onClick={handleCheckout}>
             PROCEED TO CHECKOUT
           </button>
         </div>

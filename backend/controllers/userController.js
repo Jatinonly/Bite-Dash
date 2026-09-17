@@ -3,6 +3,10 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
 
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+};
+
 // login user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -26,9 +30,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
-};
 
 //register user
 const registerUser = async (req, res) => {
@@ -65,7 +66,7 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    const user = await newUser.save(); // saves this newUser in the database collection
+    const user = await newUser.save(); // this saves this newUser in the database collection
     const token = createToken(user._id);
     res.json({ success: true, token });
   } catch (error) {

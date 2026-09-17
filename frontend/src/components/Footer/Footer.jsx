@@ -13,12 +13,11 @@ const Footer = () => {
           </Link>
           <p>Delicious meals, made fresh and delivered to your door.</p>
           <div className="footer-social-icon">
-            <img src={assets.facebook_icon} alt="" />
-            <img src={assets.twitter_icon} alt="" />
             <a
               href="https://www.linkedin.com/in/jatin-kumar-9697a728b"
               target="_blank"
               rel="noopener noreferrer"
+              className="footer-social-link"
               aria-label="Visit Jatin Kumar on LinkedIn"
             >
               <img src={assets.linkedin_icon} alt="LinkedIn" />
@@ -27,7 +26,7 @@ const Footer = () => {
               href="https://github.com/Jatinonly/Bite-Dash"
               target="_blank"
               rel="noopener noreferrer"
-              className="github-social-icon"
+              className="footer-social-link github-social-icon"
               aria-label="Visit the Bite Dash project on GitHub"
             >
               <img src={assets.github} alt="GitHub" />
@@ -46,7 +45,7 @@ const Footer = () => {
         <div className="footer-content-right">
           <h2>GET IN TOUCH</h2>
           <ul>
-            <li>+91-9588522559</li>
+            <li>+91-8930000321</li>
             <li>jatin@bitedash.com</li>
           </ul>
         </div>

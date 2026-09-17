@@ -1,14 +1,18 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { useCallback } from "react";
+import { toast } from "react-toastify";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = "http://localhost:4000";
+  const url = "https://food-delivery-website-54qu.onrender.com";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
   const [isFoodLoading, setIsFoodLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState(null);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [promoCode, setPromoCode] = useState("");
 
   const applyPromoCode = (code) => {
@@ -30,23 +34,33 @@ const StoreContextProvider = (props) => {
     } else {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     }
-    if (token) {
-      await axios.post(
-        url + "/api/cart/add",
-        { itemId },
-        { headers: { token } },
-      );
+    try {
+      if (token) {
+        await axios.post(
+          url + "/api/cart/add",
+          { itemId },
+          { headers: { token } },
+        );
+      }
+      toast.success("Item added to cart");
+    } catch (error) {
+      toast.error("Could not add item to cart");
     }
   };
 
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    if (token) {
-      await axios.post(
-        url + "/api/cart/remove",
-        { itemId },
-        { headers: { token } },
-      );
+    try {
+      if (token) {
+        await axios.post(
+          url + "/api/cart/remove",
+          { itemId },
+          { headers: { token } },
+        );
+      }
+      toast.error("Item removed from cart");
+    } catch (error) {
+      toast.error("Could not remove item from cart");
     }
   };
 
@@ -69,6 +83,30 @@ const StoreContextProvider = (props) => {
       setIsFoodLoading(false);
     }
   };
+
+  const searchFood = useCallback(
+    async (query) => {
+      const normalizedQuery = query.trim();
+
+      if (!normalizedQuery) {
+        setSearchResults(null);
+        return;
+      }
+
+      setIsSearchLoading(true);
+      try {
+        const response = await axios.get(
+          `${url}/api/food/search?q=${encodeURIComponent(normalizedQuery)}`,
+        );
+        setSearchResults(response.data.success ? response.data.data : []);
+      } catch (error) {
+        setSearchResults([]);
+      } finally {
+        setIsSearchLoading(false);
+      }
+    },
+    [url],
+  );
 
   const loadCartData = async (token) => {
     const response = await axios.post(
@@ -93,6 +131,9 @@ const StoreContextProvider = (props) => {
   const contextValue = {
     food_list,
     isFoodLoading,
+    searchResults,
+    isSearchLoading,
+    searchFood,
     cartItems,
     setCartItems,
     addToCart,

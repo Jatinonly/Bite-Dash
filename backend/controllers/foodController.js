@@ -3,7 +3,6 @@ import fs from "fs";
 
 //add food item
 const addFood = async (req, res) => {
-  console.log("File received:", req.file);
   let image_filename = `${req.file.filename}`;
 
   const food = new foodModel({
@@ -33,13 +32,38 @@ const listFood = async (req, res) => {
   }
 };
 
+// search food items
+const searchFood = async (req, res) => {
+  const query = req.query.q?.trim();
+
+  if (!query) {
+    return res.json({ success: true, data: [] });
+  }
+
+  try {
+    const safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const foods = await foodModel.find({
+      $or: [
+        { name: { $regex: safeQuery, $options: "i" } },
+        { category: { $regex: safeQuery, $options: "i" } },
+        { description: { $regex: safeQuery, $options: "i" } },
+      ],
+    });
+
+    res.json({ success: true, data: foods });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error searching food" });
+  }
+};
+
 // remove food item
 const removeFood = async (req, res) => {
   try {
     const food = await foodModel.findById(req.body.id);
-    fs.unlink(`uploads/${food.image}`, () => {});
+    fs.unlink(`uploads/${food.image}`, () => {});  //delete from backend upload folder
 
-    await foodModel.findByIdAndDelete(req.body.id);
+    await foodModel.findByIdAndDelete(req.body.id);  //delete from mongo
     res.json({ success: true, message: "Food Removed" });
   } catch (error) {
     console.log(error);
@@ -47,4 +71,4 @@ const removeFood = async (req, res) => {
   }
 };
 
-export { addFood, listFood, removeFood };
+export { addFood, listFood, searchFood, removeFood };

@@ -2,28 +2,45 @@
   display: flex;
   align-items: start;
   justify-content: space-between;
-  gap: 50px;
-  margin-top: 100px;
+  gap: 64px;
+  margin: 72px auto 100px;
 }
 
 .place-order-left {
   width: 100%;
-  max-width: max(30%, 500px);
+  max-width: 620px;
+  padding: 30px;
+  border: 1px solid #f0e2df;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fffaf8, #ffffff 35%);
+  box-shadow: 0 10px 30px rgba(50, 35, 30, 0.06);
 }
 
 .place-order-left .title {
-  font-size: 30px;
+  color: #202020;
+  font-size: 28px;
   font-weight: 600;
-  margin-bottom: 50px;
+  margin-bottom: 28px;
 }
 
 .place-order-left input {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   width: 100%;
-  padding: 10px;
-  border: 1px solid #c5c5c5;
-  border-radius: 4px;
-  outline: tomato;
+  padding: 13px 14px;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  outline: none;
+  color: #333;
+  font: inherit;
+  font-size: 15px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.place-order-left input:focus {
+  border-color: tomato;
+  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.12);
 }
 
 .place-order-left .multi-fields {
@@ -33,9 +50,84 @@
 
 .place-order-right {
   width: 100%;
-  max-width: max(40%, 500px);
+  max-width: 500px;
+}
+
+.place-order-right .cart-total {
+  max-width: none;
+  padding: 30px;
+  border: 1px solid #f0e2df;
+  border-radius: 14px;
+  background-color: #fffaf8;
+  box-shadow: 0 10px 30px rgba(50, 35, 30, 0.06);
+}
+
+.place-order-right .cart-total h2 {
+  color: tomato;
+  font-size: 26px;
+}
+
+.place-order-right .cart-total-details {
+  padding: 10px 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.place-order-right .cart-total-details p:first-child {
+  color: #49557e;
+}
+
+.place-order-right .cart-total-details p:last-child {
+  color: #30343b;
+  font-weight: 500;
+}
+
+.place-order-total-values {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.place-order-total-values span {
+  color: #929292;
+  font-size: 15px;
+  text-decoration: line-through;
+}
+
+.place-order-total-values b {
+  color: tomato;
+  font-size: 19px;
 }
 
 .place-order .cart-total button {
   margin-top: 30px;
+  width: 100%;
+}
+
+@media (max-width: 850px) {
+  .place-order {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .place-order-left,
+  .place-order-right {
+    max-width: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .place-order {
+    margin-top: 48px;
+  }
+
+  .place-order-left,
+  .place-order-right .cart-total {
+    padding: 22px;
+  }
+
+  .place-order-left .multi-fields {
+    flex-direction: column;
+    gap: 0;
+  }
 }

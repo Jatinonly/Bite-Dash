@@ -3,6 +3,7 @@ import "./LoginPopUp.css";
 import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginPopUp = ({ setShowLogin }) => {
   const { url, setToken } = useContext(StoreContext);
@@ -29,20 +30,33 @@ const LoginPopUp = ({ setShowLogin }) => {
       newUrl += "/api/user/register";
     }
 
-    const response = await axios.post(newUrl, data);
+    try {
+      const response = await axios.post(newUrl, data);
 
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      setShowLogin(false);
-    } else {
-      alert(response.data.message);
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setShowLogin(false);
+        toast.success(
+          currState === "Login"
+            ? "Logged in successfully"
+            : "Account created successfully",
+        );
+      } else {
+        toast.error(response.data.message || "Unable to continue");
+      }
+    } catch {
+      toast.error("Unable to connect. Please try again.");
     }
   };
 
   return (
-    <div className="login-popup">
-      <form onSubmit={onLogin} className="login-popup-container">
+    <div className="login-popup" onClick={() => setShowLogin(false)}>
+      <form
+        onSubmit={onLogin}
+        onClick={(event) => event.stopPropagation()}
+        className="login-popup-container"
+      >
         <div className="login-popup-title">
           <h2>{currState}</h2>
           <img
@@ -84,12 +98,14 @@ const LoginPopUp = ({ setShowLogin }) => {
         <button type="submit">
           {currState === "Sign Up" ? "Create Account" : "Login"}
         </button>
-        <div className="login-popup-condition">
-          <input id="terms-agreement" type="checkbox" required />
-          <label htmlFor="terms-agreement">
-            By continuing, I agree to the terms of use & privacy policy.
-          </label>
-        </div>
+        {currState === "Sign Up" && (
+          <div className="login-popup-condition">
+            <input id="terms-agreement" type="checkbox" required />
+            <label htmlFor="terms-agreement">
+              By continuing, I agree to the terms of use & privacy policy.
+            </label>
+          </div>
+        )}
         {currState === "Login" ? (
           <p>
             Create a new Account?{" "}

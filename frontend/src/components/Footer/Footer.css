@@ -48,7 +48,7 @@
 }
 
 .footer-social-icon img {
-  width: 40px;
+  width: 46px;
   margin-right: 15px;
 }
 
@@ -57,9 +57,19 @@
   align-items: center;
 }
 
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.footer-social-link:hover {
+  transform: scale(1.12);
+}
+
 .github-social-icon {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -69,8 +79,8 @@
 }
 
 .footer-social-icon .github-social-icon img {
-  width: 33px;
-  height: 33px;
+  width: 38px;
+  height: 38px;
   margin-right: 0;
 }
 

@@ -1,0 +1,136 @@
+.home-page {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  padding-bottom: 24px;
+}
+
+.home-page .header {
+  margin-top: 18px;
+  margin-bottom: 72px;
+  box-shadow: 0 20px 45px rgba(68, 40, 30, 0.14);
+}
+
+.home-page .explore-menu {
+  gap: 16px;
+  scroll-margin-top: 24px;
+}
+
+.home-page .explore-menu h1,
+.home-page .food-display h2 {
+  color: #24201f;
+  letter-spacing: -0.01em;
+}
+
+.home-page .explore-menu-text {
+  color: #766b67;
+  line-height: 1.65;
+}
+
+.home-page .explore-menu-list {
+  justify-content: flex-start;
+  max-width: 100%;
+  min-width: 0;
+  margin: 12px 0 8px;
+  padding: 4px 2px 12px;
+  gap: clamp(18px, 3vw, 34px);
+  scrollbar-width: none;
+}
+
+.home-page .explore-menu-list-item {
+  flex: 0 0 auto;
+}
+
+.home-page .explore-menu-list-item img {
+  box-shadow: 0 8px 18px rgba(70, 43, 34, 0.1);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.home-page .explore-menu-list-item img:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 13px 22px rgba(70, 43, 34, 0.16);
+}
+
+.home-page .explore-menu-list-item p {
+  color: #4e4642;
+  font-weight: 500;
+}
+
+.home-page .explore-menu hr {
+  height: 1px;
+  margin: 6px 0 0;
+  background: #eaded9;
+}
+
+.home-page .food-display {
+  margin-top: 62px;
+}
+
+.home-page .food-display h2 {
+  font-size: clamp(24px, 2.4vw, 32px);
+}
+
+.home-page .food-display-list {
+  min-width: 0;
+  margin-top: 26px;
+  gap: 28px;
+  row-gap: 38px;
+}
+
+.home-page .food-item {
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(56, 38, 31, 0.08);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.home-page .food-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 30px rgba(56, 38, 31, 0.14);
+}
+
+.home-page .app-download {
+  margin-top: 112px;
+  padding: 54px 24px;
+  border-top: 1px solid #f0dfda;
+  border-bottom: 1px solid #f0dfda;
+  color: #2c2522;
+  background: linear-gradient(135deg, #fff8f5, #fffdfc);
+}
+
+@media (max-width: 750px) {
+  .home-page .header {
+    margin-top: 10px;
+    margin-bottom: 42px;
+  }
+
+  .home-page .food-display {
+    margin-top: 48px;
+  }
+
+  .home-page .food-display-list {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 18px;
+    row-gap: 24px;
+  }
+
+  .home-page .app-download {
+    margin-top: 76px;
+    padding: 38px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page .explore-menu-text {
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  .home-page .food-display-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

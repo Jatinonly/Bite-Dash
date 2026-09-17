@@ -34,7 +34,7 @@
   bottom: 10%;
   left: 6vw;
   z-index: 1;
-  animation: fadeIn 2s;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .header-contents h2 {
@@ -72,13 +72,45 @@
 }
 
 @media (max-width: 750px) {
-  .header-contents {
-    max-width: 65%;
+  .header {
+    height: 52vw;
+    min-height: 230px;
+    margin-bottom: 0;
+    border-radius: 16px;
   }
+
+  .header-contents {
+    max-width: 72%;
+    left: 7%;
+    bottom: 9%;
+    gap: 3vw;
+  }
+
+  .header-contents h2 {
+    font-size: clamp(27px, 5.4vw, 42px);
+    line-height: 1.1;
+  }
+
   .header-contents p {
     display: none;
   }
+
   .header-contents a {
-    padding: 2vw 4vw;
+    padding: 11px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 64vw;
+    min-height: 220px;
+  }
+
+  .header-contents {
+    max-width: 82%;
+  }
+
+  .header-contents h2 {
+    font-size: clamp(25px, 7vw, 34px);
   }
 }

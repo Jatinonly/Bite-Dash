@@ -1,0 +1,55 @@
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.confirm-box {
+  background: white;
+  padding: 28px 32px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 340px;
+}
+
+.confirm-box p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.confirm-actions button {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.confirm-cancel {
+  background: #eee;
+  color: #333;
+}
+
+.confirm-cancel:hover {
+  background: #ddd;
+}
+
+.confirm-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.confirm-delete:hover {
+  background: #c0392b;
+}

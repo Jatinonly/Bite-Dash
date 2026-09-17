@@ -1,5 +1,6 @@
 .food-display {
   margin-top: 30px;
+  scroll-margin-top: 110px;
 }
 
 .food-display h2 {
@@ -23,6 +24,14 @@
   justify-content: center;
   gap: 14px;
   color: #49557e;
+  font-size: 16px;
+}
+
+.food-empty {
+  min-height: 160px;
+  display: grid;
+  place-items: center;
+  color: #766b67;
   font-size: 16px;
 }
 

@@ -37,7 +37,7 @@ const Add = ({ url }) => {
         category: "Salad",
       });
       setImage(false);
-      toast.success(response.data.message);
+      toast.success("Item added. Check the list.");
     } else {
       toast.error(response.data.message);
     }
@@ -49,10 +49,14 @@ const Add = ({ url }) => {
         <div className="add-img-upload flex-col">
           <p>Upload Image</p>
           <label htmlFor="image">
-            <img
-              src={image ? URL.createObjectURL(image) : assets.upload_area}
-              alt=""
-            />
+            {image ? (
+              <img src={URL.createObjectURL(image)} alt="Selected food" />
+            ) : (
+              <span className="upload-placeholder">
+                <img src={assets.upload_area} alt="" />
+                <span>Upload</span>
+              </span>
+            )}
           </label>
           <input
             onChange={(e) => setImage(e.target.files[0])}

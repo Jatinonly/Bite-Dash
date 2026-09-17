@@ -27,6 +27,10 @@ const PlaceOrder = () => {
     phone: "",
   });
 
+  const subtotal = getTotalCartAmount();
+  const discount = getDiscountAmount();
+  const finalTotal = subtotal === 0 ? 0 : subtotal - discount + 49;
+
   const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -162,19 +166,25 @@ const PlaceOrder = () => {
           <div>
             <div className="cart-total-details">
               <p>Subtotal</p>
-              <p>₹{getTotalCartAmount()}</p>
+              <p>₹{subtotal}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <p>Delivery Fee</p>
-              <p>₹{getTotalCartAmount() === 0 ? 0 : 49}</p>
+              <p>₹{subtotal === 0 ? 0 : 49}</p>
+            </div>
+            <hr />
+            <div className="cart-total-details">
+              <p>Discount</p>
+              <p>-₹{discount}</p>
             </div>
             <hr />
             <div className="cart-total-details">
               <b>Total</b>
-              <b>
-                ₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 49}
-              </b>
+              <div className="place-order-total-values">
+                {discount > 0 && <span>₹{subtotal + 49}</span>}
+                <b>₹{finalTotal}</b>
+              </div>
             </div>
           </div>
           <button type="submit">PROCEED TO PAYMENT</button>

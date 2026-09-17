@@ -2,15 +2,45 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 4%;
+  min-height: 72px;
+  padding: 12px 4%;
+  background: #ffffff;
+  border-bottom: 1px solid #eee5e2;
 }
 
 .navbar .logo {
-  width: max(10%, 80px);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 0.86;
+  white-space: nowrap;
+}
+
+.navbar .logo span {
+  color: tomato;
+  font-size: clamp(24px, 2.7vw, 38px);
+  font-weight: 800;
+}
+
+.navbar .logo small {
+  margin-top: 5px;
+  color: #5b5b5b;
+  font-size: clamp(15px, 1.6vw, 23px);
+  font-weight: 700;
+  line-height: 1;
 }
 
 .navbar .profile {
-  width: 40px;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-
+.navbar .profile:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
