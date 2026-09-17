@@ -6,7 +6,7 @@ A full-stack food delivery web application built with the MERN stack, featuring 
 
 | Service | Link |
 |---|---|
-| 🌐 Customer Website | [Add your frontend Render link here](https://food-del-frontend-oy6v.onrender.com) |
+| 🌐 Customer Website | [BiteDash Live](https://food-del-frontend-oy6v.onrender.com) |
 
 > **Note:** Since the backend is hosted on Render's free tier, the first request after a period of inactivity may take 10-20 seconds to respond while the server spins up.
 
