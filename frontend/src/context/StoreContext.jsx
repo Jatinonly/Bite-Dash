@@ -109,12 +109,19 @@ const StoreContextProvider = (props) => {
   );
 
   const loadCartData = async (token) => {
-    const response = await axios.post(
-      url + "/api/cart/get",
-      {},
-      { headers: { token } },
-    );
-    setCartItems(response.data.cartData);
+      try {
+          const response = await axios.post(
+              url + "/api/cart/get",
+              {},
+              { headers: { token } },
+          );
+          setCartItems(response.data.cartData || {});
+      } catch (error) {
+          console.log(error);
+          setCartItems({});
+          localStorage.removeItem("token");
+          setToken("");
+      }
   };
 
   useEffect(() => {
