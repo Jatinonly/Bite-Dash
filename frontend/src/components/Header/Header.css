@@ -8,6 +8,8 @@
   overflow: hidden;
   box-shadow: none;
   border-radius: 20px;
+
+  width: 90%;
 }
 
 .header::before {
@@ -63,6 +65,12 @@
 
 .header-contents a:hover {
   transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .header {
+    width: calc(100% - 32px);
+  }
 }
 
 @media (max-width: 1050px) {

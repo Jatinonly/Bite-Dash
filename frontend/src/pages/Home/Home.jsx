@@ -11,9 +11,11 @@ const Home = () => {
   return (
     <div className="home-page">
       <Header />
-      <ExploreMenu category={category} setCategory={setCategory} />
-      <FoodDisplay category={category} />
-      <AppDownload />
+      <div className="content-container">
+        <ExploreMenu category={category} setCategory={setCategory} />
+        <FoodDisplay category={category} />
+        <AppDownload />
+      </div>
     </div>
   );
 };
