@@ -7,7 +7,7 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = "https://food-delivery-website-54qu.onrender.com";
+  const url = import.meta.env.BACKEND_URI;
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
   const [isFoodLoading, setIsFoodLoading] = useState(true);

@@ -7,7 +7,7 @@ const PROMO_CODES = { BITE10: 0.1 };
 
 //placing user order for frontend
 const placeOrder = async (req, res) => {
-  const frontend_url = "https://food-del-frontend-oy6v.onrender.com";
+  const frontend_url = process.env.FRONTEND_URI;
 
   try {
     const newOrder = new orderModel({
